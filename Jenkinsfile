@@ -17,7 +17,7 @@ spec:
 """
   ) {
 
-  def image = "jenkins/jnlp-slave"
+  def image = "web-nginx"
   node(POD_LABEL) {
     stage('Build Docker image') {
        git branch: 'main', 
