@@ -20,12 +20,12 @@ pipeline {
     }
     stage('Pushing Image') {
       environment {
-          registryCredential = 'dockerhub-credentials'
+          registryCredential = 'dockerhub-login'
            }
       steps{
         script {
           docker.withRegistry( 'https://registry.hub.docker.com', registryCredential ) {
-            dockerImage.push("latest")
+            dockerImage.push("v1")
           }
         }
       }
@@ -33,9 +33,9 @@ pipeline {
     stage('Deploy App to Kubernetes') {    
       steps {
         container('kubectl') {
-          withCredentials([file(credentialsId: 'kubeconfig', variable: 'KUBECONFIG')]) {
-            sh 'sed -i "s/<TAG>/${BUILD_NUMBER}/" web-app.yaml'
-            sh 'kubectl apply -f web-app.yaml'
+          withCredentials([file(credentialsId: 'kube-login', variable: 'KUBECONFIG')]) {
+            sh 'sed -i "s/<TAG>/${BUILD_NUMBER}/" deployment.yaml'
+            sh 'kubectl apply -f deployment.yaml'
           }
         }
       }
