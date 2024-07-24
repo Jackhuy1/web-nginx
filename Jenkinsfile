@@ -32,7 +32,7 @@ pipeline {
     stage('Deploy App to kuberentes') {
       steps {
          container('kubectl') {
-          withCredentials([file(kube-login: 'kubeconfig', variable: 'KUBECONFIG')]) {
+          withCredentials([file(credentialsId: 'kube-config', variable: 'KUBECONFIG')]) {
             sh 'sed -i "s/<TAG>/${BUILD_NUMBER}/" deployment.yaml'
             sh 'kubectl apply -f deployment.yaml'
         }
