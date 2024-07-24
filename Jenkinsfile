@@ -34,6 +34,7 @@ pipeline {
     stages {
         stage('Checkout') {
             steps {
+                git branch: 'main',
                 git 'https://github.com/Jackhuy1/web-nginx.git'
             }
         }
