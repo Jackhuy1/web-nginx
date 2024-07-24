@@ -14,6 +14,8 @@ def STAGING_NAMESPACE = 'staging'
 def PRODUCTION_NAMESPACE = 'production'
 def PULL_SECRET = "registry-${REGISTRY_CREDENTIALS}"
 
+def DOCKER_HOST_VALUE = 'tcp://dind.default:2375'
+
 def DOCKER_POD = """
 apiVersion: v1
 kind: Pod
