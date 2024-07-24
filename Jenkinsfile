@@ -1,7 +1,4 @@
 pipeline {
-    options {
-        disableConcurrentBuilds()
-    }
     agent {
         kubernetes {
             label 'docker-kube'
