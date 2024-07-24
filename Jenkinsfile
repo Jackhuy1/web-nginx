@@ -1,4 +1,8 @@
 pipeline {
+  environment {
+    dockerimagename = "theidiothuy45/webthingy"
+    dockerImage = ""
+  }
   agent {
     kubernetes {
       label 'kube-agent'
