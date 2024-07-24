@@ -1,19 +1,19 @@
 apiVersion : apps/v1
 kind: Deployment
 metadata:
-  name: testingthings 
+  name: web-nginx 
 spec:
   replicas: 1
   selector:
     matchLabels:
-      app: testingthings
+      app: web-nginx
   template:
     metadata:
       labels:
-        app: testingthings 
+        app: web-nginx
     spec:
       containers:
-        - name: testingthings 
-          image: huyacr.azurecr.io/testingthings
+        - name: web-nginx
+          image: theidiothuy45/web-thingy:v1
           ports:
           - containerPort: 80
