@@ -35,7 +35,7 @@ pipeline {
         stage('Checkout') {
             steps {
                 git branch: 'main',
-                git 'https://github.com/Jackhuy1/web-nginx.git'
+                    url: 'https://github.com/Jackhuy1/web-nginx.git'
             }
         }
         stage('Docker Build') {
