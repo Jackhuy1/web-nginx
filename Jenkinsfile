@@ -7,14 +7,14 @@ pipeline {
                 kind: Pod
                 spec:
                 containers:
-                - name: docker-client
-                  image: docker:19.03.1
+                - name: docker
+                  image: docker:latest
                   command: ['sleep', '99d']
                   env:
                     - name: DOCKER_HOST
                       value: tcp://localhost:2375
                 - name: docker-daemon
-                  image: docker:19.03.1-dind
+                  image: docker:latest-dind
                   env:
                     - name: DOCKER_TLS_CERTDIR
                       value: ""
