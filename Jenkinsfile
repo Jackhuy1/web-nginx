@@ -8,7 +8,6 @@ pipeline {
     dockerImage = ""
   }
         }
-  agent any
   stages {
     stage('Checkout Source') {
       steps {
