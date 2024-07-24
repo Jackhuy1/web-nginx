@@ -7,7 +7,7 @@ pipeline {
   stages {
     stage('Checkout Source') {
       steps {
-        git 'https://github.com/Jackhuy1/web-nginx.git'
+        git branch: 'main', url: 'https://github.com/Jackhuy1/web-nginx.git'
       }
     }
     stage('Build image') {
