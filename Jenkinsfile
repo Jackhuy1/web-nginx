@@ -11,7 +11,7 @@ apiVersion: v1
 kind: Pod
 spec:
 containers:
-- name: docker-client
+- name: docker
   image: docker:19.03.1
   command: ['sleep', '99d']
   env:
@@ -39,7 +39,7 @@ volumes:
   stages {
   stage('Docker Build') {
             steps {
-                container('docker-client') {
+                container('docker') {
                     sh 'docker version && DOCKER_BUILDKIT=1 docker build --progress plain -t web-nginx:v1 .'
                 }
             }
