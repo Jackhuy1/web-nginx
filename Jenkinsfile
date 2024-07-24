@@ -29,10 +29,12 @@ pipeline {
         }
       }
     }
-    stage('Deploying web-nginx container to Kubernetes') {
+    stage('Deploy App to kuberentes') {
       steps {
-        script {
-          kubernetesDeploy(configs: "deployment.yaml", "service.yaml")
+         container('kubectl') {
+          withCredentials([file(kube-login: 'kubeconfig', variable: 'KUBECONFIG')]) {
+            sh 'sed -i "s/<TAG>/${BUILD_NUMBER}/" deployment.yaml'
+            sh 'kubectl apply -f deployment.yaml'
         }
       }
     }
