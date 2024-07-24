@@ -1,9 +1,8 @@
 def REGISTRY_URL = 'https://index.docker.io/v1'
 def OWNER = 'theidiothuy45'
 def REPO_NAME = 'web-thingy'
-def IMAGE_NAME = 'web-thingy'
 
-def IMAGE_REGISTRY = "${REGISTRY_URL}/${OWNER}/${REPO_NAME}/${IMAGE_NAME}"
+def IMAGE_REGISTRY = "${REGISTRY_URL}/${OWNER}/${REPO_NAME}"
 def IMAGE_BRANCH_TAG = "${IMAGE_REGISTRY}:${env.BRANCH_NAME}"
 
 def REGISTRY_CREDENTIALS = 'dockerhub-login'
