@@ -1,17 +1,16 @@
 pipeline {
-  environment {
-    dockerimagename = "theidiothuy45/webthingy"
-    dockerImage = ""
-  }
-agent {
+    options {
+        disableConcurrentBuilds()
+    }
+    agent {
         kubernetes {
-            label 'kube-agent'
+            label 'docker-kube'
             yaml """
 apiVersion: v1
 kind: Pod
 spec:
 containers:
-- name: docker
+- name: docker-client
   image: docker:19.03.1
   command: ['sleep', '99d']
   env:
@@ -33,38 +32,20 @@ volumes:
       path: /tmp
       type: Directory
 """
+        }
     }
-  }
-
-  stages {
-  stage('Docker Build') {
+    stages {
+        stage('Checkout') {
             steps {
-                container('docker') {
+                git 'https://github.com/Jackhuy1/web-nginx.git'
+            }
+        }
+        stage('Docker Build') {
+            steps {
+                container('docker-client') {
                     sh 'docker version && DOCKER_BUILDKIT=1 docker build --progress plain -t web-nginx:v1 .'
                 }
             }
         }
-    stage('Pushing Image') {
-      environment {
-          registryCredential = 'dockerhub-login'
-           }
-      steps{
-        script {
-          docker.withRegistry( 'https://registry.hub.docker.com', registryCredential ) {
-            dockerImage.push("v1")
-          }
-        }
-      }
     }
-    stage('Deploy App to Kubernetes') {    
-      steps {
-        container('kubectl') {
-          withCredentials([file(credentialsId: 'kube-login', variable: 'KUBECONFIG')]) {
-            sh 'sed -i "s/<TAG>/${BUILD_NUMBER}/" deployment.yaml'
-            sh 'kubectl apply -f deployment.yaml'
-          }
-        }
-      }
-    }
-  }
 }
