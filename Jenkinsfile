@@ -1,8 +1,13 @@
 pipeline {
+    agent {
+        kubernetes {
+            cloud 'Kubernetes-Debian'
+            label 'jenkins'
   environment {
     dockerimagename = "theidiothuy45/web-thingy"
     dockerImage = ""
   }
+        }
   agent any
   stages {
     stage('Checkout Source') {
