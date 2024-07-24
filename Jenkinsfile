@@ -5,7 +5,7 @@ pipeline {
   }
   agent {
     kubernetes {
-      label 'kube-agent'
+      label 'kubeagent'
     }
   }
 
