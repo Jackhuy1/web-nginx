@@ -20,7 +20,7 @@ spec:
   def image = "jenkins/jnlp-slave"
   node(POD_LABEL) {
     stage('Build Docker image') {
-      git 'https://github.com/jenkinsci/docker-jnlp-slave.git'
+      git 'https://github.com/Jackhuy1/web-nginx.git'
       container('docker') {
         sh "docker build -t ${image} ."
       }
