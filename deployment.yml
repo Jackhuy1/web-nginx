@@ -1,0 +1,19 @@
+apiVersion : apps/v1
+kind: Deployment
+metadata:
+  name: testingthings 
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: testingthings
+  template:
+    metadata:
+      labels:
+        app: testingthings 
+    spec:
+      containers:
+        - name: testingthings 
+          image: huyacr.azurecr.io/testingthings
+          ports:
+          - containerPort: 80
