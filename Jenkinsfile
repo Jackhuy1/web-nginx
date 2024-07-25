@@ -23,8 +23,10 @@ volumes:[
         println "build & push"
 
         // perform docker login
-        withCredentials(credentialsId: jenkins_registry_cred_id) {
-          sh "docker login -u ${env.USERNAME} -p ${env.PASSWORD} ${docker_registry_url}"
+	withCredentials([usernamePassword(credentialsId: 'jenkins_registry_cred_id', passwordVariable: 'password', usernameVariable: 'username')]){
+                         sh '''
+                            echo "${password} | docker login -u ${username} --password-stdin"
+                         '''
         }
 
         // build and publish container
