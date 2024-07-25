@@ -4,9 +4,10 @@ kind: Pod
 spec:
   containers:
   - name: docker
-    image: docker:1.11
+    image: docker:latest
     command: ['cat']
-    tty: true
+    tty: true,
+    privileged: true
     volumeMounts:
     - name: dockersock
       mountPath: /var/run/docker.sock
