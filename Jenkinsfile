@@ -6,7 +6,7 @@ spec:
   - name: docker
     image: docker:latest
     command: ['cat']
-    tty: true,
+    tty: true
     privileged: true
     volumeMounts:
     - name: dockersock
