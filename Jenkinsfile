@@ -1,14 +1,12 @@
-#!/usr/bin/groovy
-
-podTemplate(label: 'jenkins-agent', containers: [
-    containerTemplate(name: 'jnlp', image: 'jenkinsci/jnlp-slave:2.62', args: '${computer.jnlpmac} ${computer.name}', workingDir: '/home/jenkins', resourceRequestCpu: '500m', resourceLimitCpu: '500m', resourceRequestMemory: '1024Mi', resourceLimitMemory: '1024Mi'),
-    containerTemplate(name: 'docker', image: 'docker:1.12.6', command: 'cat', ttyEnabled: true),
+podTemplate(label: 'kube-agent', containers: [
+    containerTemplate(name: 'jnlp', image: 'jenkins/inbound-agent:latest', args: '${computer.jnlpmac} ${computer.name}', workingDir: '/home/jenkins', resourceRequestCpu: '500m', resourceLimitCpu: '500m', resourceRequestMemory: '1024Mi', resourceLimitMemory: '1024Mi'),
+    containerTemplate(name: 'docker', image: 'docker:latest', command: 'cat', ttyEnabled: true),
 ],
 volumes:[
     hostPathVolume(mountPath: '/var/run/docker.sock', hostPath: '/var/run/docker.sock'),
 ]){
 
-  node ('jenkins-agent') {
+  node ('kube-agent') {
 
     def pwd = pwd()
     def tags = [env.BUILD_TAG, 'latest']
@@ -16,7 +14,8 @@ volumes:[
     def docker_email = "huyluong41@gmail.com"
     def docker_repo = "web-thingy"
     def docker_acct = "theidiothuy45"
-
+    // checkout sources
+    checkout scm
     // Build and push the Docker image
     stage ('Build & Push Docker image') {
 
