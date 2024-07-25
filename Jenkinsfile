@@ -1,6 +1,6 @@
 podTemplate(label: 'kube-agent', containers: [
     containerTemplate(name: 'jnlp', image: 'jenkins/inbound-agent:latest', args: '${computer.jnlpmac} ${computer.name}', workingDir: '/home/jenkins', resourceRequestCpu: '500m', resourceLimitCpu: '500m', resourceRequestMemory: '1024Mi', resourceLimitMemory: '1024Mi'),
-    containerTemplate(name: 'docker', image: 'docker:latest', command: 'cat', ttyEnabled: true),
+    containerTemplate(name: 'docker', image: 'docker:latest', command: 'cat', ttyEnabled: true, privileged: true),
 ],
 volumes:[
     hostPathVolume(mountPath: '/var/run/docker.sock', hostPath: '/var/run/docker.sock'),
