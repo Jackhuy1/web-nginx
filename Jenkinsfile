@@ -13,7 +13,6 @@ volumes:[
     def docker_registry_url = "index.docker.io"
     def docker_repo = "web-thingy"
     def docker_acct = "theidiothuy45"
-    def jenkins_registry_cred_id = "dockerhub-login"
     // checkout sources
     checkout scm
     // Build and push the Docker image
@@ -23,7 +22,7 @@ volumes:[
         println "build & push"
 
         // perform docker login
-	withCredentials([usernamePassword(credentialsId: 'jenkins_registry_cred_id', passwordVariable: 'password', usernameVariable: 'username')]){
+	withCredentials([usernamePassword(credentialsId: 'dockerhub-login', passwordVariable: 'password', usernameVariable: 'username')]){
                          sh '''
                             echo "${password} | docker login -u ${username} --password-stdin"
                          '''
@@ -36,7 +35,7 @@ volumes:[
             acct      : docker_acct,
             repo      : docker_repo,
             tags      : tags,
-            auth_id   : jenkins_registry_cred_id
+            auth_id   : dockerhub-login
         )
       }
     }
