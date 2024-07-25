@@ -23,7 +23,7 @@ volumes:[
         println "build & push"
 
         // perform docker login
-        withCredentials([[$class: 'UsernamePasswordMultiBinding', credentialsId: jenkins_registry_cred_id, usernameVariable: 'USERNAME', passwordVariable: 'PASSWORD']]) {
+        withCredentials(credentialsId: jenkins_registry_cred_id, usernameVariable: 'USERNAME', passwordVariable: 'PASSWORD']]) {
           sh "docker login -u ${env.USERNAME} -p ${env.PASSWORD} ${docker_registry_url}"
         }
 
