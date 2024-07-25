@@ -11,7 +11,6 @@ volumes:[
     def pwd = pwd()
     def tags = [env.BUILD_TAG, 'latest']
     def docker_registry_url = "index.docker.io"
-    def docker_email = "huyluong41@gmail.com"
     def docker_repo = "web-thingy"
     def docker_acct = "theidiothuy45"
     def jenkins_registry_cred_id = "dockerhub-login"
@@ -25,7 +24,7 @@ volumes:[
 
         // perform docker login
         withCredentials([[$class: 'UsernamePasswordMultiBinding', credentialsId: jenkins_registry_cred_id, usernameVariable: 'USERNAME', passwordVariable: 'PASSWORD']]) {
-          sh "docker login -e ${docker_email} -u ${env.USERNAME} -p ${env.PASSWORD} ${docker_registry_url}"
+          sh "docker login -u ${env.USERNAME} -p ${env.PASSWORD} ${docker_registry_url}"
         }
 
         // build and publish container
