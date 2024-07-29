@@ -1,13 +1,13 @@
 pipeline {
   environment {
-    dockerimagename = "bravinwasike/react-app"
+    dockerimagename = "theidiothuy45/web-thingy"
     dockerImage = ""
   }
   agent any
   stages {
     stage('Checkout Source') {
       steps {
-        git 'https://github.com/YOURUSERNAME/jenkins-kubernetes-deployment.git'
+        git 'https://github.com/Jackhuy1/web-nginx.git'
       }
     }
     stage('Build image') {
@@ -19,7 +19,7 @@ pipeline {
     }
     stage('Pushing Image') {
       environment {
-          registryCredential = 'dockerhub-credentials'
+          registryCredential = 'docker-login'
            }
       steps{
         script {
@@ -29,7 +29,7 @@ pipeline {
         }
       }
     }
-    stage('Deploying React.js container to Kubernetes') {
+    stage('Deploying simple nginx container to Kubernetes') {
       steps {
         script {
           kubernetesDeploy(configs: "deployment.yaml", 
